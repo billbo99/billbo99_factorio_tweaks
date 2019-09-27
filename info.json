@@ -7,7 +7,10 @@
     "homepage": "https://mods.factorio.com/mod/billbo99_factorio_tweaks",
     "factorio_version": "0.17",
     "dependencies": [
-        "base >= 0.17.69"
+        "base >= 0.17.69",
+        "?Darkstar_utilities",
+        "?deadlock-experiments",
+        "?deadlock-stacking-crating-bobs"
     ],
     "description": "Personal tweaks I wish to use on servers I run to get other mods to behave in different ways"
 }
