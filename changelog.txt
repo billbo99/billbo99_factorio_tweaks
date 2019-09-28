@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.4
+Date: 2019-09-28
+  Features:
+  Changes:
+    - Add a recipe to allow direct stack smelting of gold-ore to gold-plate
+    - Add a recipe to allow direct stack smelting of lead-ore to lead-plate
+  Bug fixes:
+  Info:
+---------------------------------------------------------------------------------------------------
 Version: 0.0.3
 Date: 2019-09-28
   Features:
