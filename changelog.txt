@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.3
+Date: 2019-09-28
+  Features:
+  Changes:
+    - Expanded laser drills 'resource_searching_radius' by 1 so no strips of resources are left
+    - Add a recipe to allow direct stack smelting of sand to glass
+  Bug fixes:
+  Info:
+---------------------------------------------------------------------------------------------------
 Version: 0.0.2
 Date: 2019-09-28
   Features:

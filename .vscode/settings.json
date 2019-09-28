@@ -1,5 +1,9 @@
 {
     "cSpell.words": [
-        "darkstar"
+        "darkstar",
+        "ipairs",
+        "math",
+        "startup",
+        "tonumber"
     ]
 }
