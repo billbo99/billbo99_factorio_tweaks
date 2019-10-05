@@ -1,12 +1,12 @@
 local Actions = {}
 local Logging = require("utils/logging")
-local Commands = require("utils/commands")
 local Func = require("utils/func")
+local Print = require("utils/print")
 
 function Actions.killBiters(event)
 	if not Func.isAdmin(game.players[event.player_index]) then return end
 	game.forces["enemy"].kill_all_units() 
-	Func.printToAll('Bye bye biters')
+	Print.ToAll('Bye bye biters')
 end
 
 function Actions.killSpawners(event)
@@ -19,14 +19,14 @@ function Actions.killSpawners(event)
 			entity.destroy()
 		end
 	end
-	Func.printToAll('Bye bye biters, worms and spawners')
+	Print.ToAll('Bye bye biters, worms and spawners')
 end
 
 function Actions.rechartMap(event)
 	if not Func.isAdmin(game.players[event.player_index]) then return end
 	
 	game.forces.player.rechart()
-	Func.printToAll('Clear the fog for a bit')
+	Print.ToAll('Clear the fog for a bit')
 end
 
 function Actions.hideAll(event)
@@ -39,14 +39,14 @@ function Actions.hideAll(event)
 	for chunk in surface.get_chunks() do
 		force.unchart_chunk({x = chunk.x, y = chunk.y}, surface)
 	end
-	Func.printToAll('The world is hidden from eye site')
+	Print.ToAll('The world is hidden from eye site')
 end
 
 function Actions.chartAll(event)
 	if not Func.isAdmin(game.players[event.player_index]) then return end
 
 	game.forces.player.chart_all()
-	Func.printToAll('Let the world be shown')
+	Print.ToAll('Let the world be shown')
 end
 
 function Actions.chartLocalMap(event)
@@ -58,16 +58,17 @@ function Actions.chartLocalMap(event)
 		radius = event.parameter
 	end
 	player.force.chart(player.surface, {{player.position.x-radius, player.position.y-radius}, {player.position.x+radius, player.position.y+radius}})
-	Func.printToAll('Show me what is out there')
+	Print.ToAll('Show me what is out there')
 end
 
 function Actions.register_commands()
-	Commands.Register("killBiters", {"api-description.default_action_killBiters"}, Actions.killBiters, true)
-	Commands.Register("killSpawners", {"api-description.default_action_killSpawners"}, Actions.killSpawners, true)
-	Commands.Register("rechartMap", {"api-description.default_action_rechartMap"}, Actions.rechartMap, true)
-	Commands.Register("hideAll", {"api-description.default_action_hideAll"}, Actions.hideAll, true)
-	Commands.Register("chartAll", {"api-description.default_action_chartAll"}, Actions.chartAll, true)
-	Commands.Register("chartLocalMap", {"api-description.default_action_chartLocalMap"}, Actions.chartLocalMap, true)
+	log("Actions.register_commands")
+	commands.add_command("killBiters", {"api-description.default_action_killBiters"}, Actions.killBiters)
+	commands.add_command("killSpawners", {"api-description.default_action_killSpawners"}, Actions.killSpawners)
+	commands.add_command("rechartMap", {"api-description.default_action_rechartMap"}, Actions.rechartMap)
+	commands.add_command("hideAll", {"api-description.default_action_hideAll"}, Actions.hideAll)
+	commands.add_command("chartAll", {"api-description.default_action_chartAll"}, Actions.chartAll)
+	commands.add_command("chartLocalMap", {"api-description.default_action_chartLocalMap"}, Actions.chartLocalMap)
 end
 
 return Actions

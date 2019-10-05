@@ -1,6 +1,6 @@
 {
     "name": "billbo99_factorio_tweaks",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "title": "Factorio Tweaks by billbo99",
     "author": "billbo99",
     "contact": "",
@@ -8,6 +8,7 @@
     "factorio_version": "0.17",
     "dependencies": [
         "base >= 0.17.69",
+        "stdlib",
         "(?)Darkstar_utilities",
         "(?)deadlock-experiments",
         "(?)deadlock-stacking-crating-bobs"

@@ -1,35 +1,18 @@
+local Print = require("utils/print")
 local Func = {}
 
-function Func.splitString(s)
+function Func.splitString(s, regex)
     chunks = {}
     count = 0
-    for substring in s:gmatch("%S+") do
+    if regex == nil then
+        regex = "%S+"
+    end
+
+    for substring in s:gmatch(regex) do
         count = count + 1
         chunks[count] = substring
     end
     return chunks
-end
-
-function Func.printToAll(message)
-    for _, player in pairs(game.players) do
-        player.print(message)
-    end
-end
-
-function Func.printToAdmins(message)
-    for _, player in pairs(game.players) do
-        if (player.admin) then
-            player.print(message)
-        end
-    end
-end
-
-function Func.printToAllBut(message, excludeName)
-    for _, player in pairs(game.players) do
-        if (player.name ~= excludeName) then
-            player.print(message)
-        end
-    end
 end
 
 function Func.getPlayerByName(playerName)
@@ -89,18 +72,16 @@ function Func.isAdmin(player)
 	end
 end
 
-function Func.unqique_list(list_to_fix)
-	local hash = {}
-	for _,v in ipairs(list_to_fix) do
-		hash[v] = true
-	end
-
-	-- transform keys back into values
-	local res = {}
-	for k,_ in pairs(hash) do
-		res[#res+1] = k
-	end
-	return res
+function Func.trustedUsers()
+    list = {}
+    if settings.startup["auto-trusted-permissions"].value ~= nil then
+        _trusted_string = string.gsub(settings.startup["auto-trusted-permissions"].value, ",", " ")
+        local split_by_space = Func.splitString(_trusted_string)
+        for k,v in ipairs(split_by_space) do
+            list[v] = 'Trusted'
+        end
+    end
+    return list
 end
 
 return Func

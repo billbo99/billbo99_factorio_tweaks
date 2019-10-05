@@ -1,4 +1,6 @@
-if not settings.startup["darkstar"].value then
+if settings.startup["darkstar"].value and mods["darkstar"] then
+    log("option enabled and mod installed")
+else
     return
 end
 
