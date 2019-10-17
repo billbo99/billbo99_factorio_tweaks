@@ -1,4 +1,4 @@
-if not settings.startup["enable-anti-grief"].value then
+if not settings.startup["billbo99-enable-anti-grief"].value then
     return nil
 end
 

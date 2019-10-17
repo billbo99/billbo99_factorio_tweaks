@@ -1,5 +1,5 @@
 -- deadlock-experiments needs to have its dependencies changed to that it comes after all the other deadlock stacking mods that are out there.
-if settings.startup["darkstar"].value and mods["darkstar"] then
+if settings.startup["billbo99-darkstar"].value and mods["darkstar"] then
     log("option enabled and mod installed")
 else
     return
@@ -61,7 +61,7 @@ local function rerun_densityoverride()
     end
 end
 
-if settings.startup["darkstar"].value then
+if settings.startup["billbo99-darkstar"].value then
     deadlock.add_stack("sand", nil, "deadlock-stacking-1", 32, "item")
 
     add_ore_to_deadlock("sand", 5, "glass", 18.5)

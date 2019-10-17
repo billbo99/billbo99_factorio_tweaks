@@ -68,7 +68,7 @@ function AntiGrief.disableGod(player)
     player.create_character()
     player.print("You are no longer in god mode.")
 end
-Func.addCommand("god", "player> - Toggles god mode for a player.", AntiGrief.toggleGod)
+commands.add_command("god", "player> - Toggles god mode for a player.", AntiGrief.toggleGod)
 
 -- remove all decontruct marking
 function AntiGrief._removeAllDeconstruct(force, surface, area)

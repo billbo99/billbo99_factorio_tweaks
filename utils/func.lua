@@ -74,8 +74,8 @@ end
 
 function Func.trustedUsers()
     list = {}
-    if settings.startup["auto-trusted-permissions"].value ~= nil then
-        _trusted_string = string.gsub(settings.startup["auto-trusted-permissions"].value, ",", " ")
+    if settings.startup["billbo99-auto-trusted-permissions"].value ~= nil then
+        _trusted_string = string.gsub(settings.startup["billbo99-auto-trusted-permissions"].value, ",", " ")
         local split_by_space = Func.splitString(_trusted_string)
         for k,v in ipairs(split_by_space) do
             list[v] = 'Trusted'

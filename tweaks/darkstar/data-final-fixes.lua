@@ -1,4 +1,4 @@
-if settings.startup["darkstar"].value and mods["darkstar"] then
+if settings.startup["billbo99-darkstar"].value and mods["darkstar"] then
     log("option enabled and mod installed")
 else
     return

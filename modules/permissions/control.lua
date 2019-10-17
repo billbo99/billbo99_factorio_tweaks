@@ -1,4 +1,4 @@
-if not settings.startup["enable-permissions"].value then
+if not settings.startup["billbo99-enable-permissions"].value then
     return
 end
 
