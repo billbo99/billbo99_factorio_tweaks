@@ -12,6 +12,7 @@ local admin_functions = {
     ["chartAll"] = Actions.chartAll,
     ["chartLocalMap"] = Actions.chartLocalMap,
     ["spy"] = Actions.CreateMiniCameraGui,
+    ["give_item"] = Actions.GiveItem,
 }
 
 function AdminGui.onPlayerJoinedGame(event)
@@ -53,7 +54,7 @@ function AdminGui.createAdminPanel(player)
 	for _, p in pairs(game.connected_players) do		
 		table.insert(player_names, tostring(p.name))		
 	end	
-	table.insert(player_names, "Select Player")
+	-- table.insert(player_names, "Select Player")
 
     local frame = player.gui.left.add({type = "frame", name = "admin_panel", direction = "vertical"})
 
@@ -80,13 +81,13 @@ function AdminGui.createAdminPanel(player)
 	drop_down.style.width = 140
 
 	local buttons = {
-		t.add({type = "button", enabled=false, caption = "Spy", name = "spy", tooltip = "Create a mini-cam to watch a player."}),
-		t.add({type = "button", enabled=false, caption = "Trust", name = "trust", tooltip = "Trust a player"}),
-		t.add({type = "button", enabled=false, caption = "Un-Trust", name = "untrust", tooltip = "Stop trusting a player"}),
-		t.add({type = "button", enabled=false, caption = "Bring Player", name = "bring_player", tooltip = "Teleports the selected player to your position."}),
-		t.add({type = "button", enabled=false, caption = "Go to Player", name = "go_to_player", tooltip = "Teleport yourself to the selected player."}),
-		t.add({type = "button", enabled=false, caption = "gwhitelist", name = "gwhitelist", tooltip = "gwhitelist"}),
-		t.add({type = "button", enabled=false, caption = "gblacklist", name = "gblacklist", tooltip = "gblacklist"}),
+		t.add({type = "button", enabled=true, caption = "Spy", name = "spy", tooltip = "Create a mini-cam to watch a player."}),
+		-- t.add({type = "button", enabled=false, caption = "Trust", name = "trust", tooltip = "Trust a player"}),
+		-- t.add({type = "button", enabled=false, caption = "Un-Trust", name = "untrust", tooltip = "Stop trusting a player"}),
+		-- t.add({type = "button", enabled=false, caption = "Bring Player", name = "bring_player", tooltip = "Teleports the selected player to your position."}),
+		-- t.add({type = "button", enabled=false, caption = "Go to Player", name = "go_to_player", tooltip = "Teleport yourself to the selected player."}),
+		-- t.add({type = "button", enabled=false, caption = "gwhitelist", name = "gwhitelist", tooltip = "gwhitelist"}),
+		-- t.add({type = "button", enabled=false, caption = "gblacklist", name = "gblacklist", tooltip = "gblacklist"}),
 	}
 	for _, button in pairs(buttons) do
 		button.style.font = "default-bold"
@@ -134,6 +135,16 @@ function AdminGui.createAdminPanel(player)
 		button.style.width = 140
 	end
 
+	local GiveActions = frame.add{type="frame", name="Give_actions", direction = "vertical", style=mod_gui.frame_style} 
+	GiveActions.style.minimal_width = 455
+	GiveActions.style.maximal_width = 455
+
+	local l = GiveActions.add({type = "label", caption = "Give items:"})
+	local t = GiveActions.add({type = "table", column_count = 3})
+	item_picker = t.add({type = "choose-elem-button", elem_type = "item", item='small-electric-pole', name = "item_picker"})
+	item_amount = t.add({type = "textfield", text = 1, numeric = true, name = "item_amount", tooltip = 'item count'})
+	give_item_button = t.add({type = "button", name = "give_item", caption = "Give", tooltip = 'Give items to player'})
+
 end
 
 function AdminGui.onGuiClick(event)
@@ -151,8 +162,7 @@ function AdminGui.onGuiClick(event)
         else
             AdminGui.createAdminPanel(player)
         end
-    end
-
+	end
 	if admin_functions[name] then
 		admin_functions[name](event)
     end
@@ -169,8 +179,8 @@ end
 function AdminGui.onGuiValueChanged(event)
     local player = game.players[event.player_index]
 	local name = event.element.name
-	player.print("AdminGui.onGuiValueChanged")
-	player.print(name)
+	-- player.print("AdminGui.onGuiValueChanged")
+	-- player.print(name)
 end
 
 function AdminGui.onGuiValueChanged(event)

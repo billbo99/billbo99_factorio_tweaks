@@ -37,7 +37,7 @@ function Actions.CreateMiniCameraGui(event)
 
 	local frame = player.gui.left.add({type = "frame", name = "mini_camera", caption = caption})
 	local camera = frame.add({type = "camera", name = "mini_cam_element", position = position, zoom = 1, surface_index = target_player.surface.index})
-	camera.style.minimal_width = 440
+	camera.style.minimal_width = 450
 	camera.style.minimal_height = 240
 
 	global.cameras[target_player_name] = camera
@@ -52,6 +52,13 @@ function Actions.killBiters(event)
 	player = game.players[event.player_index]
 	game.forces["enemy"].kill_all_units() 
 	player.print('Bye bye biters')
+end
+
+function Actions.GiveItem(event)
+	local player = game.players[event.player_index]
+	local element = event.element
+
+	player.insert{name=element.parent["item_picker"].elem_value, count=element.parent["item_amount"].text}
 end
 
 function Actions.killLocalSpawners(event)
