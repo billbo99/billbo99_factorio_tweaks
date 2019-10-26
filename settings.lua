@@ -1,17 +1,18 @@
 data:extend(
     {
         -- runtime-per-user
-        { name = "billbo99-respawn-with-ammo", type = "bool-setting", default_value = "true", setting_type = "runtime-per-user", order = "0100" },
-        { name = "billbo99-respawn-with-gun", type = "bool-setting", default_value = "true", setting_type = "runtime-per-user", order = "0100" },
-        { name = "billbo99-respawn-with-armor", type = "bool-setting", default_value = "true", setting_type = "runtime-per-user", order = "0100" },
-        -- startup
-        { name = "billbo99-default-actions", type = "bool-setting", default_value = "true", setting_type = "startup", order = "0100" },
-        { name = "billbo99-enable-anti-grief", type = "bool-setting", default_value = "false", setting_type = "startup", order = "0200" },
-        { name = "billbo99-enable-permissions", type = "bool-setting", default_value = "false", setting_type = "startup", order = "0200" },
-        { name = "billbo99-auto-trusted-permissions", type = "string-setting", allow_blank = true, default_value = "", setting_type = "startup", order = "0210" },
-        -- tweaks of mods
-        { name = "billbo99-deadlock-experiments", type = "bool-setting", default_value = "false", setting_type = "startup", order = "1000" },
-        { name = "billbo99-darkstar", type = "bool-setting", default_value = "false", setting_type = "startup", order = "1000" },
-        { name = "billbo99-IndustrialRevolution", type = "bool-setting", default_value = "false", setting_type = "startup", order = "1000" },
+        { name = "billbo99-respawn-with-primary_gun", type = "bool-setting", default_value = "true", setting_type = "runtime-per-user", order = "0100" },
+        { name = "billbo99-respawn-with-primary_ammo", type = "bool-setting", default_value = "true", setting_type = "runtime-per-user", order = "0110" },
+        { name = "billbo99-respawn-with-secondary_gun", type = "bool-setting", default_value = "true", setting_type = "runtime-per-user", order = "0200" },
+        { name = "billbo99-respawn-with-secondary_ammo", type = "bool-setting", default_value = "true", setting_type = "runtime-per-user", order = "0210" },
+        { name = "billbo99-respawn-with-armor", type = "bool-setting", default_value = "true", setting_type = "runtime-per-user", order = "0300" },
+        -- runtime-global
+        { name = "billbo99-primary_gun_threshold", type = "int-setting", default_value = 15, setting_type = "runtime-global", order = "0100" },
+        { name = "billbo99-primary_ammo_threshold", type = "int-setting", default_value = 50, setting_type = "runtime-global", order = "0150" },
+        { name = "billbo99-primary_ammo_starting_amount", type = "int-setting", default_value = 20, setting_type = "runtime-global", order = "0160" },
+        { name = "billbo99-secondary_gun_threshold", type = "int-setting", default_value = 15, setting_type = "runtime-global", order = "0200" },
+        { name = "billbo99-secondary_ammo_threshold", type = "int-setting", default_value = 50, setting_type = "runtime-global", order = "0250" },
+        { name = "billbo99-secondary_ammo_starting_amount", type = "int-setting", default_value = 20, setting_type = "runtime-global", order = "0260" },
+        { name = "billbo99-armor_threshold", type = "int-setting", default_value = 15, setting_type = "runtime-global", order = "0300" },
     }
 )

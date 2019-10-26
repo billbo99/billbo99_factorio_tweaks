@@ -11,7 +11,7 @@ local admin_functions = {
     ["hideAll"] = Actions.hideAll,
     ["chartAll"] = Actions.chartAll,
     ["chartLocalMap"] = Actions.chartLocalMap,
-    ["spy"] = Actions.CreateMiniCameraGui,
+    -- ["spy"] = Actions.CreateMiniCameraGui,
     ["give_item"] = Actions.GiveItem,
 }
 
@@ -31,7 +31,7 @@ function AdminGui.onPlayerDemoted(event)
 	local player = game.players[event.player_index]
 	if player.gui.top["admin_button"] then player.gui.top["admin_button"].destroy() end
 	if player.gui.left["admin_panel"] then player.gui.left["admin_panel"].destroy() end
-	if player.gui.left["mini_camera"] then Actions.DestroyMiniCameraGui(event) end
+	-- if player.gui.left["mini_camera"] then Actions.DestroyMiniCameraGui(event) end
 end
 
 function AdminGui.createAdminButton(player)
@@ -81,7 +81,7 @@ function AdminGui.createAdminPanel(player)
 	drop_down.style.width = 140
 
 	local buttons = {
-		t.add({type = "button", enabled=true, caption = "Spy", name = "spy", tooltip = "Create a mini-cam to watch a player."}),
+		-- t.add({type = "button", enabled=true, caption = "Spy", name = "spy", tooltip = "Create a mini-cam to watch a player."}),
 		-- t.add({type = "button", enabled=false, caption = "Trust", name = "trust", tooltip = "Trust a player"}),
 		-- t.add({type = "button", enabled=false, caption = "Un-Trust", name = "untrust", tooltip = "Stop trusting a player"}),
 		-- t.add({type = "button", enabled=false, caption = "Bring Player", name = "bring_player", tooltip = "Teleports the selected player to your position."}),
@@ -158,7 +158,7 @@ function AdminGui.onGuiClick(event)
 			global.admin_panel_selected_player_index[player.name] = player.gui.left["admin_panel"]["player_actions"]["player_actions_table"]["admin_player_select"].selected_index
 
             player.gui.left["admin_panel"].destroy()
-            if player.gui.left["mini_camera"] then Actions.DestroyMiniCameraGui(event) end
+            -- if player.gui.left["mini_camera"] then Actions.DestroyMiniCameraGui(event) end
         else
             AdminGui.createAdminPanel(player)
         end

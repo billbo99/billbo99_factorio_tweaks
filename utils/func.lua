@@ -1,6 +1,10 @@
 local Print = require("utils/print")
 local Func = {}
 
+function Func.starts_with(str, start)
+    return str:sub(1, #start) == start
+ end
+
 function Func.splitString(s, regex)
     chunks = {}
     count = 0

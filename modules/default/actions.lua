@@ -1,50 +1,49 @@
 local Actions = {}
-local Logging = require("utils/logging")
 local Func = require("utils/func")
 local Print = require("utils/print")
 local Event = require('__stdlib__/stdlib/event/event').set_protected_mode(true)
 
 
-function Actions.UpdateCamera(event)
-	for name, camera in pairs(global.cameras) do
-		local target_player = Func.getPlayerByName(name)
-		camera.position = target_player.position
-	end
+-- function Actions.UpdateCamera(event)
+-- 	for name, camera in pairs(global.cameras) do
+-- 		local target_player = Func.getPlayerByName(name)
+-- 		camera.position = target_player.position
+-- 	end
 
-end
+-- end
 
-function Actions.DestroyMiniCameraGui(event)
-	local player = game.players[event.player_index]
-	if player.gui.left["mini_camera"] then
-		target_player_name = player.gui.left["mini_camera"].caption
-		global.cameras[target_player_name] = nil
-		player.gui.left["mini_camera"].destroy()
-	end
+-- function Actions.DestroyMiniCameraGui(event)
+-- 	local player = game.players[event.player_index]
+-- 	if player.gui.left["mini_camera"] then
+-- 		target_player_name = player.gui.left["mini_camera"].caption
+-- 		global.cameras[target_player_name] = nil
+-- 		player.gui.left["mini_camera"].destroy()
+-- 	end
 
-end
+-- end
 
-function Actions.CreateMiniCameraGui(event)
-	global.cameras = global.cameras or {}
-	local player = game.players[event.player_index]
+-- function Actions.CreateMiniCameraGui(event)
+-- 	global.cameras = global.cameras or {}
+-- 	local player = game.players[event.player_index]
 	
-	local drop_down = event.element.parent["admin_player_select"]
-	local target_player_name = drop_down.items[drop_down.selected_index]
-	local target_player = Func.getPlayerByName(target_player_name)
+-- 	local drop_down = event.element.parent["admin_player_select"]
+-- 	local target_player_name = drop_down.items[drop_down.selected_index]
+-- 	local target_player = Func.getPlayerByName(target_player_name)
 
-	if player.gui.left["mini_camera"] then Actions.DestroyMiniCameraGui(event) end
-	caption = target_player_name
-	position = target_player.position
+-- 	if player.gui.left["mini_camera"] then Actions.DestroyMiniCameraGui(event) end
+-- 	caption = target_player_name
+-- 	position = target_player.position
 
-	local frame = player.gui.left.add({type = "frame", name = "mini_camera", caption = caption})
-	local camera = frame.add({type = "camera", name = "mini_cam_element", position = position, zoom = 1, surface_index = target_player.surface.index})
-	camera.style.minimal_width = 450
-	camera.style.minimal_height = 240
+-- 	local frame = player.gui.left.add({type = "frame", name = "mini_camera", caption = caption})
+-- 	local camera = frame.add({type = "camera", name = "mini_cam_element", position = position, zoom = 1, surface_index = target_player.surface.index})
+-- 	camera.style.minimal_width = 450
+-- 	camera.style.minimal_height = 240
 
-	global.cameras[target_player_name] = camera
+-- 	global.cameras[target_player_name] = camera
 
-	Event.register(-1, Actions.UpdateCamera)
+-- 	Event.register(-1, Actions.UpdateCamera)
 
-end
+-- end
 
 function Actions.killBiters(event)
 	if not Func.isAdmin(game.players[event.player_index]) then return end

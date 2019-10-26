@@ -1,12 +1,8 @@
-if not settings.startup["billbo99-default-actions"].value then
-    return nil
-end
-
 local Event = require('__stdlib__/stdlib/event/event').set_protected_mode(true)
 
 local Default = {}
 local Actions = require("modules/default/actions")
-
+local Func = require("utils/func")
 
 -- Flush the players inventory
 function Default.ClearPlayerInventories(player)
@@ -23,8 +19,10 @@ function Default.OnPlayerCreated(event)
         -- do nothing IR gives its own starting inventory
     else
         Default.ClearPlayerInventories(player)
-        if settings.get_player_settings(player)["billbo99-respawn-with-ammo"] and global.SpawnItems["ammo"] then player.insert {name = global.SpawnItems["ammo"], count = 10} end
-        if settings.get_player_settings(player)["billbo99-respawn-with-gun"] and global.SpawnItems["gun"] then player.insert {name = global.SpawnItems["gun"], count = 1} end
+        if settings.get_player_settings(player)["billbo99-respawn-with-primary_gun"] and global.SpawnItems["primary_gun"] then player.insert {name = global.SpawnItems["primary_gun"], count = 1} end
+        if settings.get_player_settings(player)["billbo99-respawn-with-primary_ammo"] and global.SpawnItems["primary_ammo"] then player.insert {name = global.SpawnItems["primary_ammo"], count = settings.global["billbo99-primary_ammo_starting_amount"].value} end
+        if settings.get_player_settings(player)["billbo99-respawn-with-secondary_gun"] and global.SpawnItems["secondary_gun"] then player.insert {name = global.SpawnItems["secondary_gun"], count = 1} end
+        if settings.get_player_settings(player)["billbo99-respawn-with-secondary_ammo"] and global.SpawnItems["secondary_ammo"] then player.insert {name = global.SpawnItems["secondary_ammo"], count = settings.global["billbo99-secondary_ammo_starting_amount"].value} end
         if settings.get_player_settings(player)["billbo99-respawn-with-armor"] and global.SpawnItems["armor"] then player.insert {name = global.SpawnItems["armor"], count = 1} end
     
         player.insert {name = "iron-plate", count = 8}
@@ -40,8 +38,10 @@ end
 function Default.OnPlayerRespawned(event)
     local player = game.get_player(event.player_index)
     Default.ClearPlayerInventories(player)
-    if global.SpawnItems["gun"] then player.insert {name = global.SpawnItems["gun"], count = 1} end
-    if global.SpawnItems["ammo"] then player.insert {name = global.SpawnItems["ammo"], count = 10} end
+    if global.SpawnItems["primary_gun"] then player.insert {name = global.SpawnItems["primary_gun"], count = 1} end
+    if global.SpawnItems["primary_ammo"] then player.insert {name = global.SpawnItems["primary_ammo"], count = settings.global["billbo99-primary_ammo_starting_amount"].value} end
+    if global.SpawnItems["secondary_gun"] then player.insert {name = global.SpawnItems["secondary_gun"], count = 1} end
+    if global.SpawnItems["secondary_ammo"] then player.insert {name = global.SpawnItems["secondary_ammo"], count = settings.global["billbo99-secondary_ammo_starting_amount"].value} end
     if global.SpawnItems["armor"] then player.insert {name = global.SpawnItems["armor"], count = 1} end
 
     player.print({"messages.billbo99-respawn"}, global.print_colour)
@@ -50,13 +50,21 @@ end
 -- Once a minute check to see what has been made and change the default spawn gear 
 function Default.OnTickDoCheckForSpawnGear()
     Checks = {
-        -- gun
-        gun_001={priority=001, what_type='gun', what='pistol', what_name='Pistol'},
-        gun_002={priority=100, what_type='gun', what='submachine-gun', what_name='Submachine Gun'},
-        -- ammo
-        ammo_001={priority=001, what_type='ammo', what='firearm-magazine', what_name='Firearms rounds magazine'},
-        ammo_002={priority=100, what_type='ammo', what='piercing-rounds-magazine', what_name='Piercing rounds magazine'},
-        ammo_003={priority=200, what_type='ammo', what='uranium-ammo', what_name='Uranium rounds magazine'},
+        -- primary_gun
+        primary_gun_001={priority=001, what_type='primary_gun', what='pistol', what_name='Pistol'},
+        primary_gun_002={priority=100, what_type='primary_gun', what='submachine-gun', what_name='Submachine Gun'},
+        -- primary_ammo
+        primary_ammo_001={priority=001, what_type='primary_ammo', what='firearm-magazine', what_name='Firearms rounds magazine'},
+        primary_ammo_002={priority=100, what_type='primary_ammo', what='piercing-rounds-magazine', what_name='Piercing rounds magazine'},
+        primary_ammo_003={priority=200, what_type='primary_ammo', what='uranium-ammo', what_name='Uranium rounds magazine'},
+        -- secondary_gun
+        secondary_gun_001={priority=001, what_type='secondary_gun', what='flamethrower', what_name='Flame Thrower'},
+        secondary_gun_002={priority=100, what_type='secondary_gun', what='rocket-launcher', what_name='Rocket Launcher'},
+        -- secondary_ammo
+        secondary_ammo_001={priority=001, what_type='secondary_ammo', what='flamethrower-ammo', what_name='Flame Thrower ammo'},
+        secondary_ammo_002={priority=100, what_type='secondary_ammo', what='rocket', what_name='Rocket'},
+        secondary_ammo_003={priority=200, what_type='secondary_ammo', what='explosive-rocket', what_name='Explosive Rocket'},
+        secondary_ammo_003={priority=300, what_type='secondary_ammo', what='atomic-rocket', what_name='Atomic Rocket'},
         -- armor
         armor_001={priority=001, what_type='armor', what='light-armor', what_name='Light Armor'},
         armor_002={priority=100, what_type='armor', what='heavy-armor', what_name='Heavy Armor'},
@@ -67,14 +75,18 @@ function Default.OnTickDoCheckForSpawnGear()
 
     if game.active_mods["IndustrialRevolution"] then
         -- ammo
-        Checks.ammo_001={priority=001, what_type='ammo', what='copper-magazine', what_name='Copper Magazine'}
-        Checks.ammo_002={priority=100, what_type='ammo', what='iron-magazine', what_name='Iron Magazine'}
-        Checks.ammo_003={priority=200, what_type='ammo', what='steel-magazine', what_name='Steel Magazine'}
-        Checks.ammo_004={priority=300, what_type='ammo', what='titanium-magazine', what_name='Titanium Magazine'}
-        Checks.ammo_005={priority=400, what_type='ammo', what='uranium-magazine', what_name='Uranium Magazine'}
-        -- guns
-        Checks.gun_003={priority=100, what_type='gun', what='minigun', what_name='Minigun'}
+        Checks.primary_ammo_001={priority=001, what_type='ammo', what='copper-magazine', what_name='Copper Magazine'}
+        Checks.primary_ammo_002={priority=100, what_type='ammo', what='iron-magazine', what_name='Iron Magazine'}
+        Checks.primary_ammo_003={priority=200, what_type='ammo', what='steel-magazine', what_name='Steel Magazine'}
+        Checks.primary_ammo_004={priority=300, what_type='ammo', what='titanium-magazine', what_name='Titanium Magazine'}
+        Checks.primary_ammo_005={priority=400, what_type='ammo', what='uranium-magazine', what_name='Uranium Magazine'}
     end
+
+    global.SpawnItems.primary_gun_threshold = settings.global["billbo99-primary_gun_threshold"].value
+    global.SpawnItems.secondary_gun_threshold = settings.global["billbo99-secondary_gun_threshold"].value
+    global.SpawnItems.primary_ammo_threshold = settings.global["billbo99-primary_ammo_threshold"].value
+    global.SpawnItems.secondary_ammo_threshold = settings.global["billbo99-secondary_ammo_threshold"].value
+    global.SpawnItems.armor_threshold = settings.global["billbo99-armor_threshold"].value
 
     flag = false
     for k, force in pairs(game.forces) do
@@ -92,8 +104,10 @@ function Default.OnTickDoCheckForSpawnGear()
         if flag then 
             list = {}
             if global.SpawnItems.armor_name then table.insert(list, global.SpawnItems.armor_name) end
-            if global.SpawnItems.gun_name then table.insert(list, global.SpawnItems.gun_name) end
-            if global.SpawnItems.ammo_name then table.insert(list, global.SpawnItems.ammo_name) end
+            if global.SpawnItems.primary_gun_name then table.insert(list, global.SpawnItems.primary_gun_name) end
+            if global.SpawnItems.primary_ammo_name then table.insert(list, global.SpawnItems.primary_ammo_name) end
+            if global.SpawnItems.secondary_gun_name then table.insert(list, global.SpawnItems.secondary_gun_name) end
+            if global.SpawnItems.secondary_ammo_name then table.insert(list, global.SpawnItems.secondary_ammo_name) end
             force.print("Clones will now receive the following on respawn; " .. table.concat(list, ", ") , global.print_colour) 
         end
     end
@@ -105,17 +119,21 @@ function Default.OnInit()
     global.print_colour = {r=255, g=255, b=0}
     global.SpawnItems = global.SpawnItems or {}
     
-    global.SpawnItems.gun_threshold = 15
-    global.SpawnItems.ammo_threshold = 50
-    global.SpawnItems.armor_threshold = 15
-
-    global.SpawnItems.gun = global.SpawnItems.gun or nil
-    global.SpawnItems.gun_name = global.SpawnItems.gun_name or nil
-    global.SpawnItems.gun_priority = global.SpawnItems.gun_priority or 0
+    global.SpawnItems.primary_gun = global.SpawnItems.primary_gun or nil
+    global.SpawnItems.primary_gun_name = global.SpawnItems.primary_gun_name or nil
+    global.SpawnItems.primary_gun_priority = global.SpawnItems.primary_gun_priority or 0
     
-    global.SpawnItems.ammo = global.SpawnItems.ammo or nil
-    global.SpawnItems.ammo_name = global.SpawnItems.ammo_name or nil
-    global.SpawnItems.ammo_priority = global.SpawnItems.ammo_priority or 0
+    global.SpawnItems.primary_ammo = global.SpawnItems.primary_ammo or nil
+    global.SpawnItems.primary_ammo_name = global.SpawnItems.primary_ammo_name or nil
+    global.SpawnItems.primary_ammo_priority = global.SpawnItems.primary_ammo_priority or 0
+    
+    global.SpawnItems.secondary_gun = global.SpawnItems.secondary_gun or nil
+    global.SpawnItems.secondary_gun_name = global.SpawnItems.secondary_gun_name or nil
+    global.SpawnItems.secondary_gun_priority = global.SpawnItems.secondary_gun_priority or 0
+    
+    global.SpawnItems.secondary_ammo = global.SpawnItems.secondary_ammo or nil
+    global.SpawnItems.secondary_ammo_name = global.SpawnItems.secondary_ammo_name or nil
+    global.SpawnItems.secondary_ammo_priority = global.SpawnItems.secondary_ammo_priority or 0
     
     global.SpawnItems.armor = global.SpawnItems.armor or nil
     global.SpawnItems.armor_name = global.SpawnItems.armor_name or nil
@@ -136,5 +154,33 @@ end
 function Default.OnLoad()
     log("Default.OnLoad")
 end
-        
+
+function Default.OnConfigurationChanged(event)
+    local changed = event.mod_changes and event.mod_changes["billbo99_factorio_tweaks"]
+    if changed then -- something to do with your mod
+        if not changed.old_version then
+            -- your mod was added
+        elseif not changed.new_version then
+            -- your mod was removed
+        else
+            -- your mod was updated
+        end
+    end
+end
+
+function Default.OnRuntimeModSettingChanged(event)
+    local player = game.get_player(event.player_index)
+    local setting = event.setting
+    local setting_type = event.setting_type
+    if not Func.starts_with(setting, 'billbo99') then return end  -- not a setting we care about presently
+
+    -- lazy time
+    global.SpawnItems.primary_gun_threshold = settings.global["billbo99-primary_gun_threshold"].value
+    global.SpawnItems.secondary_gun_threshold = settings.global["billbo99-secondary_gun_threshold"].value
+    global.SpawnItems.primary_ammo_threshold = settings.global["billbo99-primary_ammo_threshold"].value
+    global.SpawnItems.secondary_ammo_threshold = settings.global["billbo99-secondary_ammo_threshold"].value
+    global.SpawnItems.armor_threshold = settings.global["billbo99-armor_threshold"].value
+
+end
+
 return Default
