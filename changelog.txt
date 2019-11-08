@@ -1,4 +1,20 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.1
+Date: 2019-11-08
+  Features:
+  Changes:
+   - For Teleporters mod, shift it in the research tree until after we get some space packs
+  Bug fixes:
+  Info:
+---------------------------------------------------------------------------------------------------
+Version: 0.0.9
+Date: 2019-10-26
+  Features:
+  Changes:
+   - Break out spawning logic into separate mod
+  Bug fixes:
+  Info:
+---------------------------------------------------------------------------------------------------
 Version: 0.0.8
 Date: 2019-10-18
   Features:

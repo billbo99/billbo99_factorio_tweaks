@@ -44,6 +44,16 @@ local Event = require('__stdlib__/stdlib/event/event').set_protected_mode(true)
 -- 	Event.register(-1, Actions.UpdateCamera)
 
 -- end
+function Actions.changeEvo(event)
+	if not Func.isAdmin(game.players[event.player_index]) then return end
+
+	local player = game.players[event.player_index]
+	local element = event.element
+	local factor = element.parent['changeEvoSlider_value'].caption or 0.0001
+	game.forces["enemy"].evolution_factor = factor
+	player.print('Evo set to .. ' .. game.forces["enemy"].evolution_factor)
+
+end
 
 function Actions.killBiters(event)
 	if not Func.isAdmin(game.players[event.player_index]) then return end

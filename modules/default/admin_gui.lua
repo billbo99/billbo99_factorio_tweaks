@@ -13,6 +13,7 @@ local admin_functions = {
     ["chartLocalMap"] = Actions.chartLocalMap,
     -- ["spy"] = Actions.CreateMiniCameraGui,
     ["give_item"] = Actions.GiveItem,
+    ["changeEvoButton"] = Actions.changeEvo,
 }
 
 function AdminGui.onPlayerJoinedGame(event)
@@ -47,18 +48,27 @@ function AdminGui.createAdminButton(player)
 	b.style.bottom_padding = 2
 end
 
-function AdminGui.createAdminPanel(player)	
-    if player.gui.left["admin_panel"] then player.gui.left["admin_panel"].destroy() end
+function AdminGui.MapTab(frame)
+	local f = frame.add{type="frame", name="Pollution", direction = "vertical", style=mod_gui.frame_style} 
+    local l = f.add({type = "label", caption = "Pollution Control:"})
+	f.style.minimal_width = 455
+	f.style.maximal_width = 455
+	local t = f.add({type = "table", column_count = 3})
+	b1 = t.add({type = "button", caption = "Change Evo", name = "changeEvoButton", tooltip = "Change the current value of Evo"})
+	s1 = t.add({type = "slider", name='changeEvoSlider', value = game.forces["enemy"].evolution_factor, minimum_value=0, maximum_value=1, value_step=0.000001})
+	s1.style.minimal_width = 240
+	s1.style.maximal_width = 240
+	l1 = t.add({type = "label", name='changeEvoSlider_value', caption = string.format("%.6f", t.changeEvoSlider.slider_value)})
+end
 
+function AdminGui.GeneralTab(frame)
     local player_names = {}	
 	for _, p in pairs(game.connected_players) do		
 		table.insert(player_names, tostring(p.name))		
 	end	
 	-- table.insert(player_names, "Select Player")
 
-    local frame = player.gui.left.add({type = "frame", name = "admin_panel", direction = "vertical"})
-
-    -- Create a combo box for all connected players in the game
+	-- Create a combo box for all connected players in the game
 	local selected_index = #player_names
 	if global.admin_panel_selected_player_index then
 		if global.admin_panel_selected_player_index[player.name] then
@@ -68,31 +78,31 @@ function AdminGui.createAdminPanel(player)
 		end
 	end
 
-	local PlayerActions = frame.add{type="frame", name="player_actions", direction = "vertical", style=mod_gui.frame_style} 
-	PlayerActions.style.minimal_width = 455
-	PlayerActions.style.maximal_width = 455
+	-- local PlayerActions = frame.add{type="frame", name="player_actions", direction = "vertical", style=mod_gui.frame_style} 
+	-- PlayerActions.style.minimal_width = 455
+	-- PlayerActions.style.maximal_width = 455
 
-    local l = PlayerActions.add({type = "label", caption = "Player Actions:"})
-	local t = PlayerActions.add({type = "table", name="player_actions_table", column_count = 3})
+    -- local l = PlayerActions.add({type = "label", caption = "Player Actions:"})
+	-- local t = PlayerActions.add({type = "table", name="player_actions_table", column_count = 3})
 
-	local drop_down = t.add({type = "drop-down", name = "admin_player_select", items = player_names, selected_index = selected_index})
-	drop_down.style.right_padding = 12
-	drop_down.style.left_padding = 12
-	drop_down.style.width = 140
+	-- local drop_down = t.add({type = "drop-down", name = "admin_player_select", items = player_names, selected_index = selected_index})
+	-- drop_down.style.right_padding = 12
+	-- drop_down.style.left_padding = 12
+	-- drop_down.style.width = 140
 
-	local buttons = {
-		-- t.add({type = "button", enabled=true, caption = "Spy", name = "spy", tooltip = "Create a mini-cam to watch a player."}),
-		-- t.add({type = "button", enabled=false, caption = "Trust", name = "trust", tooltip = "Trust a player"}),
-		-- t.add({type = "button", enabled=false, caption = "Un-Trust", name = "untrust", tooltip = "Stop trusting a player"}),
-		-- t.add({type = "button", enabled=false, caption = "Bring Player", name = "bring_player", tooltip = "Teleports the selected player to your position."}),
-		-- t.add({type = "button", enabled=false, caption = "Go to Player", name = "go_to_player", tooltip = "Teleport yourself to the selected player."}),
-		-- t.add({type = "button", enabled=false, caption = "gwhitelist", name = "gwhitelist", tooltip = "gwhitelist"}),
-		-- t.add({type = "button", enabled=false, caption = "gblacklist", name = "gblacklist", tooltip = "gblacklist"}),
-	}
-	for _, button in pairs(buttons) do
-		button.style.font = "default-bold"
-		button.style.width = 140
-	end
+	-- local buttons = {
+	-- 	-- t.add({type = "button", enabled=true, caption = "Spy", name = "spy", tooltip = "Create a mini-cam to watch a player."}),
+	-- 	-- t.add({type = "button", enabled=false, caption = "Trust", name = "trust", tooltip = "Trust a player"}),
+	-- 	-- t.add({type = "button", enabled=false, caption = "Un-Trust", name = "untrust", tooltip = "Stop trusting a player"}),
+	-- 	-- t.add({type = "button", enabled=false, caption = "Bring Player", name = "bring_player", tooltip = "Teleports the selected player to your position."}),
+	-- 	-- t.add({type = "button", enabled=false, caption = "Go to Player", name = "go_to_player", tooltip = "Teleport yourself to the selected player."}),
+	-- 	-- t.add({type = "button", enabled=false, caption = "gwhitelist", name = "gwhitelist", tooltip = "gwhitelist"}),
+	-- 	-- t.add({type = "button", enabled=false, caption = "gblacklist", name = "gblacklist", tooltip = "gblacklist"}),
+	-- }
+	-- for _, button in pairs(buttons) do
+	-- 	button.style.font = "default-bold"
+	-- 	button.style.width = 140
+	-- end
 
 	-- Admin actions I want to be able to do easily
 	local f = frame.add{type="frame", name="ranged_actions", direction = "horizontal", style=mod_gui.frame_style} 
@@ -144,6 +154,33 @@ function AdminGui.createAdminPanel(player)
 	item_picker = t.add({type = "choose-elem-button", elem_type = "item", item='small-electric-pole', name = "item_picker"})
 	item_amount = t.add({type = "textfield", text = 1, numeric = true, name = "item_amount", tooltip = 'item count'})
 	give_item_button = t.add({type = "button", name = "give_item", caption = "Give", tooltip = 'Give items to player'})
+end
+
+function AdminGui.createAdminPanel(player)	
+    if player.gui.left["admin_panel"] then player.gui.left["admin_panel"].destroy() end
+
+	local admin_panel_frame = player.gui.left.add({type = "frame", name = "admin_panel", direction = "vertical"})
+	admin_panel_frame.style.margin = 6
+
+	local tabbed_pane = admin_panel_frame.add({type = "tabbed-pane", name = "tabbed_pane"})
+
+	local tab = tabbed_pane.add({type = "tab", caption = "General"})
+	local frame = tabbed_pane.add({type = "frame", name = "General", direction = "vertical"})
+	frame.style.minimal_height = 240
+	frame.style.maximal_height = 480
+	frame.style.minimal_width = 460
+	frame.style.maximal_width = 500
+	tabbed_pane.add_tab(tab, frame)
+	AdminGui.GeneralTab(frame)
+
+	local tab = tabbed_pane.add({type = "tab", caption = "Map"})
+	local frame = tabbed_pane.add({type = "frame", name = "Map", direction = "vertical"})
+	frame.style.minimal_height = 240
+	frame.style.maximal_height = 480
+	frame.style.minimal_width = 460
+	frame.style.maximal_width = 500
+	tabbed_pane.add_tab(tab, frame)
+	AdminGui.MapTab(frame)
 
 end
 
@@ -154,8 +191,8 @@ function AdminGui.onGuiClick(event)
 	
 	if name == "admin_button" then		
 		if player.gui.left["admin_panel"] then 
-			if not global.admin_panel_selected_player_index then global.admin_panel_selected_player_index = {} end
-			global.admin_panel_selected_player_index[player.name] = player.gui.left["admin_panel"]["player_actions"]["player_actions_table"]["admin_player_select"].selected_index
+			-- if not global.admin_panel_selected_player_index then global.admin_panel_selected_player_index = {} end
+			-- global.admin_panel_selected_player_index[player.name] = player.gui.left["admin_panel"]["player_actions"]["player_actions_table"]["admin_player_select"].selected_index
 
             player.gui.left["admin_panel"].destroy()
             -- if player.gui.left["mini_camera"] then Actions.DestroyMiniCameraGui(event) end
@@ -172,15 +209,6 @@ end
 function AdminGui.onGuiTextChanged(event)
     local player = game.players[event.player_index]
 	local name = event.element.name
-	player.print("AdminGui.onGuiTextChanged")
-	player.print(name)
-end
-
-function AdminGui.onGuiValueChanged(event)
-    local player = game.players[event.player_index]
-	local name = event.element.name
-	-- player.print("AdminGui.onGuiValueChanged")
-	-- player.print(name)
 end
 
 function AdminGui.onGuiValueChanged(event)
@@ -197,11 +225,6 @@ end
 function AdminGui.onGuiSelectionStateChanged(event)
     local player = game.players[event.player_index]
 	local name = event.element.name
-
-	if name == "admin_player_select" and event.element.selected_index then
-		event.element.parent['spy'].enabled = true
-	end
-
 end
 
 return AdminGui

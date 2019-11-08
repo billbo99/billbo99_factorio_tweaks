@@ -1,6 +1,6 @@
 {
     "name": "billbo99_factorio_tweaks",
-    "version": "0.0.9",
+    "version": "0.1.1",
     "title": "Factorio Tweaks by billbo99",
     "author": "billbo99",
     "contact": "",
@@ -10,10 +10,10 @@
         "base >= 0.17.69",
         "stdlib",
         "(?)akimbo-weapons",
-        "(?)Darkstar_utilities",
         "(?)deadlock-experiments",
         "(?)deadlock-stacking-crating-bobs",
-        "(?)IndustrialRevolution"
+        "(?)IndustrialRevolution",
+        "(?)Teleporters"
     ],
     "description": "Personal tweaks I wish to use on servers I run to get other mods to behave in different ways"
 }
