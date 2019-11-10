@@ -11,8 +11,9 @@
         "stdlib",
         "(?)akimbo-weapons",
         "(?)deadlock-experiments",
-        "(?)deadlock-stacking-crating-bobs",
+        "(?)deadlock-beltboxes-loaders",
         "(?)IndustrialRevolution",
+        "(?)DyWorld",
         "(?)Teleporters"
     ],
     "description": "Personal tweaks I wish to use on servers I run to get other mods to behave in different ways"

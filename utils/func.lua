@@ -1,6 +1,19 @@
 local Print = require("utils/print")
 local Func = {}
 
+function Func.contains(table, element)
+    for _, value in pairs(table) do
+        if value == element then
+            return true
+        end
+    end
+    return false
+end
+
+function Func.ends_with(str, ending)
+    return ending == "" or str:sub(-#ending) == ending
+ end
+
 function Func.starts_with(str, start)
     return str:sub(1, #start) == start
  end

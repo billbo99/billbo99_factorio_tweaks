@@ -2,6 +2,7 @@
 Version: 0.1.1
 Date: 2019-11-08
   Features:
+   - Prep work for DyWorld stacked items
   Changes:
    - For Teleporters mod, shift it in the research tree until after we get some space packs
   Bug fixes:
