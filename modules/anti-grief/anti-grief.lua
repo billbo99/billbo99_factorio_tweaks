@@ -113,10 +113,7 @@ end
 
 function AntiGrief.guardBlock(offendingPlayer, area, width, height)
     offendingPlayer.print("You cannot deconstruct that.")
-    Print.ToAdmins(
-        offendingPlayer.name .. " attempted to deconstruct a large area! (" .. width .. " x " .. height .. ")",
-        offendingPlayer.name
-    )
+    Print.ToAdmins(offendingPlayer.name .. " attempted to deconstruct a large area! (" .. width .. " x " .. height .. ")", offendingPlayer.name)
     Print.ToAdmins("An admin must type /gwhitelist " .. offendingPlayer.name .. " to allow this.")
     AntiGrief._removeAllDeconstruct(offendingPlayer.force, offendingPlayer.surface, area)
 end
@@ -488,11 +485,7 @@ function AntiGrief.onTick()
         if ((not global.antigrief.whitelistTable[player.name]) and player.online_time > global.antigrief.autoTime) then
             if (player ~= nil and player.valid) then
                 player.print("You may now deconstruct freely.")
-                Print.ToAdmins(
-                    player.name ..
-                        " has been automatically whitelisted. (Online for " ..
-                            global.antigrief.autoTime / (60 * 60) .. " minutes)"
-                )
+                Print.ToAdmins(player.name .. " has been automatically whitelisted. (Online for " .. global.antigrief.autoTime / (60 * 60) .. " minutes)")
                 global.antigrief.whitelistTable[player.name] = true
             end
         end

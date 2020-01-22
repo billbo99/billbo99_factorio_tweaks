@@ -1,14 +1,13 @@
 {
     "name": "billbo99_factorio_tweaks",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "title": "Factorio Tweaks by billbo99",
     "author": "billbo99",
     "contact": "",
     "homepage": "https://mods.factorio.com/mod/billbo99_factorio_tweaks",
-    "factorio_version": "0.17",
+    "factorio_version": "0.18",
     "dependencies": [
-        "base >= 0.17.69",
-        "stdlib",
+        "base >= 0.18.0",
         "(?)akimbo-weapons",
         "(?)deadlock-experiments",
         "(?)deadlock-beltboxes-loaders",

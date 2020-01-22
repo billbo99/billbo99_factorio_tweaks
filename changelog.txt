@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 22. 01. 2020
+  Changes :
+    - Support 0.18
+---------------------------------------------------------------------------------------------------
 Version: 0.1.1
 Date: 2019-11-08
   Features:
@@ -27,7 +32,7 @@ Date: 2019-10-18
 Version: 0.0.7
 Date: 2019-10-18
   Features:
-    - Spawn ammo / gear has to be earned before its given away freely 
+    - Spawn ammo / gear has to be earned before its given away freely
   Changes:
   Bug fixes:
   Info:
