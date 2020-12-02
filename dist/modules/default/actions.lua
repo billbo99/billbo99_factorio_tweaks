@@ -1,6 +1,16 @@
 local Actions = {}
 local Func = require("utils/func")
 
+function Actions.changeSpeed(event)
+    local player = game.players[event.player_index]
+    local element = event.element
+    local speed = element.parent["changeSpeedSlider_value"].caption or 1
+    game.speed = speed
+    global.game_speed = speed
+
+    game.print("Game Speed set to .. " .. game.speed .. " .. by " .. player.name)
+end
+
 function Actions.changeEvo(event)
     if not Func.isAdmin(game.players[event.player_index]) then
         return

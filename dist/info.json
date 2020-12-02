@@ -1,19 +1,13 @@
 {
     "name": "billbo99_factorio_tweaks",
-    "version": "0.2.0",
+    "version": "1.1.1",
     "title": "Factorio Tweaks by billbo99",
     "author": "billbo99",
     "contact": "",
     "homepage": "https://mods.factorio.com/mod/billbo99_factorio_tweaks",
-    "factorio_version": "0.18",
+    "factorio_version": "1.1",
     "dependencies": [
-        "base >= 0.18.0",
-        "(?)akimbo-weapons",
-        "(?)deadlock-experiments",
-        "(?)deadlock-beltboxes-loaders",
-        "(?)IndustrialRevolution",
-        "(?)DyWorld",
-        "(?)Teleporters"
+        "base"
     ],
     "description": "Personal tweaks I wish to use on servers I run to get other mods to behave in different ways"
 }

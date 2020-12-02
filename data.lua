@@ -1,1 +1,0 @@
-require("tweaks/DyWorld/data")
