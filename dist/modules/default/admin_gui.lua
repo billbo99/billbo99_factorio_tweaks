@@ -104,11 +104,17 @@ function AdminGui.SpeedTab(frame)
     f.style.minimal_width = 455
     f.style.maximal_width = 455
     local t = f.add({type = "table", column_count = 3})
-    local b1 = t.add({type = "button", caption = "Change Speed", name = "changeSpeedButton", tooltip = "Change the current Game Speed"})
-    local s1 = t.add({type = "slider", name = "changeSpeedSlider", value = game.speed, minimum_value = 0.1, maximum_value = 1, value_step = 0.01})
+    local b1 = t.add({type = "button", caption = "Slow Down", name = "changeSpeedButton", tooltip = "Change the current Game Speed"})
+    local s1 = t.add({type = "slider", name = "changeSpeedSlider", value = game.speed, minimum_value = 0.1, maximum_value = 1, value_step = 0.05})
     s1.style.minimal_width = 240
     s1.style.maximal_width = 240
     local l1 = t.add({type = "label", name = "changeSpeedSlider_value", caption = string.format("%.2f", t.changeSpeedSlider.slider_value)})
+    ---
+    local b2 = t.add({type = "button", caption = "Speed Up", name = "changeSpeedButton2", tooltip = "Change the current Game Speed"})
+    local s2 = t.add({type = "slider", name = "changeSpeedSlider2", value = game.speed, minimum_value = 1, maximum_value = 10, value_step = 0.5})
+    s2.style.minimal_width = 240
+    s2.style.maximal_width = 240
+    local l2 = t.add({type = "label", name = "changeSpeedSlider2_value", caption = string.format("%.2f", t.changeSpeedSlider2.slider_value)})
 end
 
 function AdminGui.MapTab(frame)
@@ -263,7 +269,8 @@ AdminGui.admin_functions = {
     ["chartLocalMap"] = Actions.chartLocalMap,
     ["give_item"] = Actions.GiveItem,
     ["changeEvoButton"] = Actions.changeEvo,
-    ["changeSpeedButton"] = Actions.changeSpeed
+    ["changeSpeedButton"] = Actions.changeSpeed,
+    ["changeSpeedButton2"] = Actions.changeSpeed
 }
 
 return AdminGui

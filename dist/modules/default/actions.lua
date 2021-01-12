@@ -4,7 +4,12 @@ local Func = require("utils/func")
 function Actions.changeSpeed(event)
     local player = game.players[event.player_index]
     local element = event.element
-    local speed = element.parent["changeSpeedSlider_value"].caption or 1
+    local speed = 1
+    if element.name == "changeSpeedButton" then
+        speed = element.parent["changeSpeedSlider_value"].caption or 1
+    elseif element.name == "changeSpeedButton2" then
+        speed = element.parent["changeSpeedSlider2_value"].caption or 1
+    end
     game.speed = speed
     global.game_speed = speed
 
