@@ -15,3 +15,18 @@ data:extend(
         }
     }
 )
+
+data:extend(
+    {
+        {
+            type = "item",
+            name = "blocker",
+            order = "zzzzz",
+            stack_size = 1,
+            icon = "__core__/graphics/cancel.png",
+            icon_size = 64,
+            icon_mipmaps = 1,
+            subgroup = "raw-resource"
+        }
+    }
+)
